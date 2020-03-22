@@ -1,1 +1,1 @@
-web:gunicorn SecProgProject.wsgi
+web: gunicorn SecProgProject.wsgi
