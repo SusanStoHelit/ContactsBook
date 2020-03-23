@@ -82,11 +82,14 @@ WSGI_APPLICATION = 'SecProgProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',       
     }
 }
 
+DATABASES['default']= dj_database_url.config(default='postgres://ehygqiggzykqsk:d12a0c24043bad46d9ed52de2900d3fa00632dd239d2c7022ec2c6ac34f0ee48@ec2-18-210-51-239.compute-1.amazonaws.com:5432/d7a6dnlggq21k7')
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
