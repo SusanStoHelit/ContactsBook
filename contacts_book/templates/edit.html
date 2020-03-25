@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+	<h2>Edit Contact</h2>
+	<br/>
+
+
+	{% if get_contact %}
+		<form method="POST">
+		{% csrf_token %}	
+		  <div class="form-group">
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{get_contact.name}}" name="name">   
+		  </div>
+
+		  <div class="form-group">
+		    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{get_contact.mail}}" name="mail">	   
+		  </div>
+
+		  <div class="form-group">
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{get_contact.phone}}" name="phone">   
+		  </div>
+
+		  <div class="form-group">
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{get_contact.address}}" name="address">   
+		  </div>
+
+		  <div class="form-group">
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{get_contact.city}}" name="city">   
+		  </div>
+
+		  <div class="form-group">
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{get_contact.country}}" name="country">   
+		  </div>
+
+		  <div class="form-group">
+		    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{get_contact.postalcode}}" name="postalcode">   
+		  </div>
+		  <div class="form-group">
+		    <input type="hidden" value="{{get_contact.id}}" name="id">   
+		  </div>
+		  <br/>
+		  <br/>
+		  <button type="submit" class="btn btn-primary">Edit Contact</button>
+		</form>
+		<br/>
+		
+		<form method="POST" action="{% url 'delete' get_contact.id %}" >
+			{% csrf_token %}
+			<input type="hidden" value="{{get_contact.id}}" name="id">   
+			<button type="submit" class="btn btn-primary">Delete Contact</button>
+		</form>	
+	{% endif %}
+{% endblock %}
