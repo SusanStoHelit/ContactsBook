@@ -39,15 +39,14 @@
 		    <input type="hidden" value="{{get_contact.id}}" name="id">   
 		  </div>
 		  <br/>
-		  <br/>
-		  <button type="submit" class="btn btn-primary">Edit Contact</button>
+		  <button type="submit" class="btn btn-primary btn-sm">Edit Contact</button>
 		</form>
 		<br/>
 		
 		<form method="POST" action="{% url 'delete' get_contact.id %}" >
 			{% csrf_token %}
 			<input type="hidden" value="{{get_contact.id}}" name="id">   
-			<button type="submit" class="btn btn-primary">Delete Contact</button>
+			<button type="submit" class="btn btn-primary btn-sm">Delete Contact</button>
 		</form>	
 	{% endif %}
 {% endblock %}
