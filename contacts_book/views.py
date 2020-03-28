@@ -6,7 +6,7 @@ from django.contrib.auth import  authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 
 def home(request):
-	all_contacts = Contacts.objects.all
+	all_contacts = Contacts.objects.filter(userowner=request.user.username)
 	return render(request, 'home.html',{'all_contacts':all_contacts})
 
 def login_user(request):
@@ -74,7 +74,9 @@ def add_contact(request):
 	if request.method == 'POST':
 		form = ContactForm(request.POST or None)
 		if form.is_valid():
-			form.save()
+			instance = form.save()
+			instance.userowner = request.user.username
+			instance.save()
 			messages.success(request, ('Contact has been added!!'))
 			return redirect('home')
 		else:
