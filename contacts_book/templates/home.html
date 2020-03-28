@@ -1,28 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <div class="container">
 	<div class ="row">
-	{% if all_contacts %}
-		{% for records in all_contacts %}
-			<div class="col-sm">
-				<div class="card" style="width: 18rem;">
-				  <div class="card-body">
-				    <h5 class="card-title">{{ records.name }} </h5>
-				    <p class="card-text">
-				    	{{ records.mail }} </br>
-						{{ records.phone }} </br>
-						{{ records.address }} </br>
-						{{ records.city }} </br>
-						{{ records.country }} </br>
-						{{ records.postalcode }} </br>
-				    </p>
-				    <a href="{% url 'edit' records.id %}" class="btn btn-primary">Edit</a>
-				  </div>
-				</div>
-			</div>
-			</br>
-		{% endfor%}
-	{% endif %}
+		{%  if request.user.is_authenticated %}
+			{% if all_contacts %}
+				{% for records in all_contacts %}
+					<div class="col-sm">
+						<div class="card" style="width: 18rem;">
+						  <div class="card-body">
+						    <h5 class="card-title">{{ records.name }} </h5>
+						    <p class="card-text">
+						    	{{ records.mail }} </br>
+								{{ records.phone }} </br>
+								{{ records.address }} </br>
+								{{ records.city }} </br>
+								{{ records.country }} </br>
+								{{ records.postalcode }} </br>
+						    </p>
+						    <a href="{% url 'edit' records.id %}" class="btn btn-primary">Edit</a>
+						  </div>
+						</div>
+					</div>
+					</br>
+				{% endfor%}
+			{% endif %}
+		{% endif %}
 
 </div></div>
 {% endblock %}

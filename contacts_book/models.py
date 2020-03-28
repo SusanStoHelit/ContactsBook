@@ -8,6 +8,7 @@ class Contacts(models.Model):
 	city = models.CharField(max_length=100)
 	country = models.CharField(max_length=100)
 	postalcode = models.CharField(max_length=10)
+	userowner = models.CharField(max_length=100)
 
 	def __str__(self):
 		return self.name
