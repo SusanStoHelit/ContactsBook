@@ -4,6 +4,8 @@ from .forms import ContactForm, SignUpForm, EditProfileForm
 from django.contrib import messages
 from django.contrib.auth import  authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
+import logging
+logger = logging.getLogger('django.server')
 
 def home(request):
 	all_contacts = Contacts.objects.filter(userowner=request.user.username)
@@ -17,9 +19,11 @@ def login_user(request):
 	    if user is not None:
 	        login(request, user)
 	        messages.success(request,('You have been loggen in!'))
+	        logger.info('Someone logged in')
 	        return redirect('home')
 	    else:
 	    	messages.success(request,('Error Logging in - Please try again...'))
+	    	logger.error('Error, failed login')
 	    	return redirect('login')
 	else:
 		return render(request, 'login.html')
