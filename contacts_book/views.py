@@ -19,17 +19,19 @@ def login_user(request):
 	    if user is not None:
 	        login(request, user)
 	        messages.success(request,('You have been loggen in!'))
-	        logger.info('Someone logged in')
+	        logger.info('Login Successful user: ' + username)
 	        return redirect('home')
 	    else:
 	    	messages.success(request,('Error Logging in - Please try again...'))
-	    	logger.error('Error, failed login')
+	    	logger.error('Error, failed login from user: '+username)
 	    	return redirect('login')
 	else:
 		return render(request, 'login.html')
 def logout_user(request):
+	name_user =  request.user.username
 	logout(request)
 	messages.success(request,('You have been logged out...'))
+	logger.info('Logout Successful user: ' + name_user)
 	return redirect('home')
 
 def register_user(request):
@@ -42,6 +44,7 @@ def register_user(request):
 			user = authenticate(request, username=username, password=password)
 			login(request,user)
 			messages.success(request,('You have registered!'))
+			logger.info('Account Created Successfull user: ' + username)
 			return redirect('home')
 	else:
 		form = SignUpForm()
@@ -54,6 +57,7 @@ def edit_profile(request):
 		if form.is_valid():
 			form.save()			
 			messages.success(request,('You have edited your account!'))
+			logger.info('Account Edited for user: ' + str(request.user))
 			return redirect('home')
 	else:
 		form = EditProfileForm(instance=request.user)
@@ -66,6 +70,7 @@ def change_password(request):
 		if form.is_valid():
 			form.save()			
 			messages.success(request,('You have eddited your passowrd!'))
+			logger.info('Password changed for user: ' + str(request.user))
 			return redirect('home')
 	else:
 		form = PasswordChangeForm(user=request.user)
@@ -82,9 +87,11 @@ def add_contact(request):
 			instance.userowner = request.user.username
 			instance.save()
 			messages.success(request, ('Contact has been added!!'))
+			logger.info('Contact added: '+instance.name +' for user: ' + instance.userowner)
 			return redirect('home')
 		else:
-			messages.success(request, ('Seems like there was an error......!'))
+			messages.success(request, form.errors)
+			logger.error('Error, adding contact: '+str(form.errors)+' for user:'+ request.user.username)
 			return render(request,'add_contact.html',{})
 	else:
 		return render(request, 'add_contact.html',{})
@@ -92,13 +99,16 @@ def add_contact(request):
 def edit(request, list_id):
 	if request.method == 'POST':
 		current_contact = Contacts.objects.get(pk=list_id)
+		contact_id = current_contact.id
 		form = ContactForm(request.POST or None, instance=current_contact)
 		if form.is_valid():
 			form.save()
 			messages.success(request, ('Contact has been edited!!'))
+			logger.info('Contact edited: '+str(contact_id) +' for user: ' + request.user.username)
 			return redirect('home')
 		else:
-			messages.success(request, ('Seems like there was an error......!'))
+			messages.success(request, form.errors)
+			logger.error('Error, editing contact: '+str(form.errors)+' for user:'+ request.user.username)
 			return render(request,'edit.html',{})
 	else:
 		get_contact = Contacts.objects.get(pk=list_id)
@@ -107,9 +117,12 @@ def edit(request, list_id):
 def delete(request, list_id):
 	if request.method == 'POST':
 		current_contact = Contacts.objects.get(pk=list_id)
+		contact_deleted = current_contact.name
 		current_contact.delete()
 		messages.success(request, ('Contact has been deleted!!'))
+		logger.info('Contact deleted: '+contact_deleted +' for user: ' + request.user.username)
 		return redirect('home')		
 	else:
 		messages.success(request, ('Nothing has been deleted!!'))
+		logger.error('Error, deleting contact: '+str(form.errors)+' for user:'+ request.user.username)
 		return redirect('home')	
