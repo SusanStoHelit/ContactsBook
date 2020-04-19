@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -86,7 +86,7 @@ DATABASES = {
     }
 }
 
-DATABASES['default']= dj_database_url.config(default='postgres://ehygqiggzykqsk:d12a0c24043bad46d9ed52de2900d3fa00632dd239d2c7022ec2c6ac34f0ee48@ec2-18-210-51-239.compute-1.amazonaws.com:5432/d7a6dnlggq21k7')
+DATABASES['default']= dj_database_url.config(default='postgres://hxliuaqtpqeuca:7ed6cb62d84ef511cff28acf58e5376fd85f15d6f3ba971db5504de1c8c12a3c@ec2-52-71-55-81.compute-1.amazonaws.com:5432/de7pu8kvdgmkbh')
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
