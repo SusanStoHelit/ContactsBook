@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator, EmailValidator
 
 class Contacts(models.Model):
-	alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+	alphanumeric = RegexValidator(r'^[0-9a-zA-Z| ]*$', 'Only alphanumeric characters are allowed.')
 	val_phone = RegexValidator(r'^[\+|0-9][0-9]*$','Only Number or international format e.g +3531234567')
 	val_email = EmailValidator('Invalid Email address.')
 	name = models.CharField(max_length=200, validators=[alphanumeric])
