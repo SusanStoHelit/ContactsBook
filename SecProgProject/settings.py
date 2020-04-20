@@ -124,7 +124,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Security Warnings Changed
-SECURE_REFERRER_POLICY = 'no-referrer'
+#SECURE_REFERRER_POLICY = 'no-referrer'
 #SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
